@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CoffeeShopDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Categories">
+    <Key>
+      <PropertyRef Name="CatId" />
+    </Key>
+    <Property Name="CatId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Products" Relationship="Self.FK_tblProducts_tblCategories" FromRole="Categories" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="Invoices">
+    <Key>
+      <PropertyRef Name="InvoiceId" />
+    </Key>
+    <Property Name="InvoiceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" />
+    <Property Name="Bill" Type="Int32" />
+    <Property Name="Payment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="InvoiceDate" Type="DateTime" Precision="3" />
+    <Property Name="Status" Type="Byte" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__Invoices__UserId__34C8D9D1" FromRole="Invoices" ToRole="Users" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__InvoiceI__3D5E1FD2" FromRole="Invoices" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="OrderId" />
+    </Key>
+    <Property Name="OrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProID" Type="Int32" />
+    <Property Name="Contact" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Unit" Type="Int32" />
+    <Property Name="Qty" Type="Int32" />
+    <Property Name="Total" Type="Int32" />
+    <Property Name="OrderDate" Type="DateTime" Precision="3" />
+    <Property Name="InvoiceId" Type="Int32" />
+    <NavigationProperty Name="Invoices" Relationship="Self.FK__Orders__InvoiceI__3D5E1FD2" FromRole="Orders" ToRole="Invoices" />
+    <NavigationProperty Name="Products" Relationship="Self.FK_tblOrder_tblProducts" FromRole="Orders" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="ProID" />
+    </Key>
+    <Property Name="ProID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Unit" Type="Int32" />
+    <Property Name="Image" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="CatId" Type="Int32" />
+    <NavigationProperty Name="Categories" Relationship="Self.FK_tblProducts_tblCategories" FromRole="Products" ToRole="Categories" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_tblOrder_tblProducts" FromRole="Products" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Sits">
+    <Key>
+      <PropertyRef Name="sitId" />
+    </Key>
+    <Property Name="sitId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="available" Type="Byte" Nullable="false" />
+    <Property Name="tableId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Tables" Relationship="Self.FK__Sits__tableId__4D94879B" FromRole="Sits" ToRole="Tables" />
+  </EntityType>
+  <EntityType Name="Tables">
+    <Key>
+      <PropertyRef Name="tableId" />
+    </Key>
+    <Property Name="tableId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="numSits" Type="Int32" />
+    <Property Name="area" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Sits" Relationship="Self.FK__Sits__tableId__4D94879B" FromRole="Tables" ToRole="Sits" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="RoleType" Type="Int32" />
+    <NavigationProperty Name="Invoices" Relationship="Self.FK__Invoices__UserId__34C8D9D1" FromRole="Users" ToRole="Invoices" />
+  </EntityType>
+  <EntityType Name="getAvailableSits">
+    <Key>
+      <PropertyRef Name="SitId" />
+      <PropertyRef Name="tableId" />
+      <PropertyRef Name="available" />
+    </Key>
+    <Property Name="SitId" Type="Int32" Nullable="false" />
+    <Property Name="tableId" Type="Int32" Nullable="false" />
+    <Property Name="available" Type="Byte" Nullable="false" />
+  </EntityType>
+  <EntityType Name="getOrders">
+    <Key>
+      <PropertyRef Name="InvoiceId" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="InvoiceId" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="user" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Bill" Type="Int32" />
+    <Property Name="Payment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="InvoiceDate" Type="DateTime" Precision="3" />
+    <Property Name="Status" Type="Byte" />
+  </EntityType>
+  <EntityType Name="getOrdersUsers">
+    <Key>
+      <PropertyRef Name="InvoiceId" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="InvoiceId" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="user" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Bill" Type="Int32" />
+    <Property Name="Payment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="InvoiceDate" Type="DateTime" Precision="3" />
+    <Property Name="Status" Type="Byte" />
+  </EntityType>
+  <EntityType Name="getProducts">
+    <Key>
+      <PropertyRef Name="ProID" />
+    </Key>
+    <Property Name="ProID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Unit" Type="Int32" />
+    <Property Name="Image" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="getTableSits">
+    <Key>
+      <PropertyRef Name="SitId" />
+      <PropertyRef Name="tableId" />
+      <PropertyRef Name="available" />
+    </Key>
+    <Property Name="SitId" Type="Int32" Nullable="false" />
+    <Property Name="tableId" Type="Int32" Nullable="false" />
+    <Property Name="available" Type="Byte" Nullable="false" />
+  </EntityType>
+  <EntityType Name="userInvoices">
+    <Key>
+      <PropertyRef Name="InvoiceId" />
+    </Key>
+    <Property Name="InvoiceId" Type="Int32" Nullable="false" />
+    <Property Name="Customer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Bill" Type="Int32" />
+    <Property Name="Payment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="InvoiceDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <Association Name="FK_tblProducts_tblCategories">
+    <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+    <End Role="Products" Type="Self.Products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="CatId" />
+      </Principal>
+      <Dependent Role="Products">
+        <PropertyRef Name="CatId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Invoices__UserId__34C8D9D1">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Invoices" Type="Self.Invoices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="Invoices">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__InvoiceI__3D5E1FD2">
+    <End Role="Invoices" Type="Self.Invoices" Multiplicity="0..1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Invoices">
+        <PropertyRef Name="InvoiceId" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="InvoiceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblOrder_tblProducts">
+    <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProID" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="ProID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Sits__tableId__4D94879B">
+    <End Role="Tables" Type="Self.Tables" Multiplicity="1" />
+    <End Role="Sits" Type="Self.Sits" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tables">
+        <PropertyRef Name="tableId" />
+      </Principal>
+      <Dependent Role="Sits">
+        <PropertyRef Name="tableId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Categories" EntityType="Self.Categories" />
+    <EntitySet Name="Invoices" EntityType="Self.Invoices" />
+    <EntitySet Name="Orders" EntityType="Self.Orders" />
+    <EntitySet Name="Products" EntityType="Self.Products" />
+    <EntitySet Name="Sits" EntityType="Self.Sits" />
+    <EntitySet Name="Tables" EntityType="Self.Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <EntitySet Name="getAvailableSits" EntityType="Self.getAvailableSits" />
+    <EntitySet Name="getOrders" EntityType="Self.getOrders" />
+    <EntitySet Name="getOrdersUsers" EntityType="Self.getOrdersUsers" />
+    <EntitySet Name="getProducts" EntityType="Self.getProducts" />
+    <EntitySet Name="getTableSits" EntityType="Self.getTableSits" />
+    <EntitySet Name="userInvoices" EntityType="Self.userInvoices" />
+    <AssociationSet Name="FK_tblProducts_tblCategories" Association="Self.FK_tblProducts_tblCategories">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Invoices__UserId__34C8D9D1" Association="Self.FK__Invoices__UserId__34C8D9D1">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Invoices" EntitySet="Invoices" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__InvoiceI__3D5E1FD2" Association="Self.FK__Orders__InvoiceI__3D5E1FD2">
+      <End Role="Invoices" EntitySet="Invoices" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblOrder_tblProducts" Association="Self.FK_tblOrder_tblProducts">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Sits__tableId__4D94879B" Association="Self.FK__Sits__tableId__4D94879B">
+      <End Role="Tables" EntitySet="Tables" />
+      <End Role="Sits" EntitySet="Sits" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

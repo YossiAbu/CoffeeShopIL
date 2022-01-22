@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="af995d906dc8448f8d3589b8fe2f544b" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="CoffeeShopDbModel.Categories" Width="1.5" PointX="5.75" PointY="5.375" />
+        <EntityTypeShape EntityType="CoffeeShopDbModel.Invoices" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="CoffeeShopDbModel.Orders" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="CoffeeShopDbModel.Products" Width="1.5" PointX="8" PointY="5" />
+        <EntityTypeShape EntityType="CoffeeShopDbModel.Tables" Width="1.5" PointX="0.75" PointY="5" />
+        <EntityTypeShape EntityType="CoffeeShopDbModel.Users" Width="1.5" PointX="0.75" PointY="1.25" />
+        <EntityTypeShape EntityType="CoffeeShopDbModel.getallorderuser" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="CoffeeShopDbModel.getOrders" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="CoffeeShopDbModel.getTableSits" Width="1.5" PointX="2.75" PointY="7.75" />
+        <EntityTypeShape EntityType="CoffeeShopDbModel.userInvoices" Width="1.5" PointX="4.75" PointY="7.75" />
+        <EntityTypeShape EntityType="CoffeeShopDbModel.viewallproduct" Width="1.5" PointX="6.75" PointY="8.75" />
+        <AssociationConnector Association="CoffeeShopDbModel.FK_tblProducts_tblCategories" />
+        <AssociationConnector Association="CoffeeShopDbModel.FK__Invoices__UserId__5535A963" />
+        <AssociationConnector Association="CoffeeShopDbModel.FK__Orders__InvoiceI__5812160E" />
+        <EntityTypeShape EntityType="CoffeeShopDbModel.Sits" Width="1.5" PointX="3" PointY="4.375" />
+        <AssociationConnector Association="CoffeeShopDbModel.FK__Sits__tableId__6B24EA82" />
+        <AssociationConnector Association="CoffeeShopDbModel.FK__Sits__userId__6C190EBB" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

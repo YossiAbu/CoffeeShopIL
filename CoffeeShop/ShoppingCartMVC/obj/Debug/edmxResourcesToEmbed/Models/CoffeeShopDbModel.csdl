@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CoffeeShopDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="CoffeeShopDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Categories" EntityType="CoffeeShopDbModel.Categories" />
+    <EntitySet Name="Invoices" EntityType="CoffeeShopDbModel.Invoices" />
+    <EntitySet Name="Orders" EntityType="CoffeeShopDbModel.Orders" />
+    <EntitySet Name="Products" EntityType="CoffeeShopDbModel.Products" />
+    <EntitySet Name="Tables" EntityType="CoffeeShopDbModel.Tables" />
+    <EntitySet Name="Users" EntityType="CoffeeShopDbModel.Users" />
+    <EntitySet Name="getallorderuser" EntityType="CoffeeShopDbModel.getallorderuser" />
+    <EntitySet Name="getOrders" EntityType="CoffeeShopDbModel.getOrders" />
+    <EntitySet Name="getTableSits" EntityType="CoffeeShopDbModel.getTableSits" />
+    <EntitySet Name="userInvoices" EntityType="CoffeeShopDbModel.userInvoices" />
+    <EntitySet Name="viewallproduct" EntityType="CoffeeShopDbModel.viewallproduct" />
+    <AssociationSet Name="FK_tblProducts_tblCategories" Association="CoffeeShopDbModel.FK_tblProducts_tblCategories">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Invoices__UserId__5535A963" Association="CoffeeShopDbModel.FK__Invoices__UserId__5535A963">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Invoices" EntitySet="Invoices" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__InvoiceI__5812160E" Association="CoffeeShopDbModel.FK__Orders__InvoiceI__5812160E">
+      <End Role="Invoices" EntitySet="Invoices" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <EntitySet Name="Sits" EntityType="CoffeeShopDbModel.Sits" />
+    <AssociationSet Name="FK__Sits__tableId__6B24EA82" Association="CoffeeShopDbModel.FK__Sits__tableId__6B24EA82">
+      <End Role="Tables" EntitySet="Tables" />
+      <End Role="Sits" EntitySet="Sits" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Sits__userId__6C190EBB" Association="CoffeeShopDbModel.FK__Sits__userId__6C190EBB">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Sits" EntitySet="Sits" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Categories">
+    <Key>
+      <PropertyRef Name="CatId" />
+    </Key>
+    <Property Name="CatId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Products" Relationship="CoffeeShopDbModel.FK_tblProducts_tblCategories" FromRole="Categories" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="Invoices">
+    <Key>
+      <PropertyRef Name="InvoiceId" />
+    </Key>
+    <Property Name="InvoiceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="userId" Type="Int32" />
+    <Property Name="Bill" Type="Int32" />
+    <Property Name="Payment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="InvoiceDate" Type="DateTime" Precision="0" />
+    <Property Name="Status" Type="Byte" />
+    <NavigationProperty Name="Users" Relationship="CoffeeShopDbModel.FK__Invoices__UserId__5535A963" FromRole="Invoices" ToRole="Users" />
+    <NavigationProperty Name="Orders" Relationship="CoffeeShopDbModel.FK__Orders__InvoiceI__5812160E" FromRole="Invoices" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="OrderId" />
+    </Key>
+    <Property Name="OrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProID" Type="Int32" />
+    <Property Name="Contact" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Unit" Type="Int32" />
+    <Property Name="Qty" Type="Int32" />
+    <Property Name="Total" Type="Int32" />
+    <Property Name="OrderDate" Type="DateTime" Precision="0" />
+    <Property Name="InvoiceId" Type="Int32" />
+    <NavigationProperty Name="Invoices" Relationship="CoffeeShopDbModel.FK__Orders__InvoiceI__5812160E" FromRole="Orders" ToRole="Invoices" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="ProID" />
+    </Key>
+    <Property Name="ProID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Unit" Type="Int32" />
+    <Property Name="Image" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+    <Property Name="CatId" Type="Int32" />
+    <NavigationProperty Name="Categories" Relationship="CoffeeShopDbModel.FK_tblProducts_tblCategories" FromRole="Products" ToRole="Categories" />
+  </EntityType>
+  <EntityType Name="Tables">
+    <Key>
+      <PropertyRef Name="tableId" />
+    </Key>
+    <Property Name="tableId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="numSeats" Type="Int32" />
+    <Property Name="area" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Sits" Relationship="CoffeeShopDbModel.FK__Sits__tableId__6B24EA82" FromRole="Tables" ToRole="Sits" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="userId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="RoleType" Type="Int32" />
+    <NavigationProperty Name="Invoices" Relationship="CoffeeShopDbModel.FK__Invoices__UserId__5535A963" FromRole="Users" ToRole="Invoices" />
+    <NavigationProperty Name="Sits" Relationship="CoffeeShopDbModel.FK__Sits__userId__6C190EBB" FromRole="Users" ToRole="Sits" />
+  </EntityType>
+  <EntityType Name="getallorderuser">
+    <Key>
+      <PropertyRef Name="InvoiceId" />
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="InvoiceId" Type="Int32" Nullable="false" />
+    <Property Name="userId" Type="Int32" Nullable="false" />
+    <Property Name="user" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Bill" Type="Int32" />
+    <Property Name="Payment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="InvoiceDate" Type="DateTime" Precision="0" />
+    <Property Name="Status" Type="Byte" />
+  </EntityType>
+  <EntityType Name="getOrders">
+    <Key>
+      <PropertyRef Name="InvoiceId" />
+      <PropertyRef Name="userId" />
+    </Key>
+    <Property Name="InvoiceId" Type="Int32" Nullable="false" />
+    <Property Name="userId" Type="Int32" Nullable="false" />
+    <Property Name="user" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Bill" Type="Int32" />
+    <Property Name="Payment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="InvoiceDate" Type="DateTime" Precision="0" />
+    <Property Name="Status" Type="Byte" />
+  </EntityType>
+  <EntityType Name="getTableSits">
+    <Key>
+      <PropertyRef Name="SitId" />
+      <PropertyRef Name="tableId" />
+      <PropertyRef Name="available" />
+    </Key>
+    <Property Name="SitId" Type="Int32" Nullable="false" />
+    <Property Name="tableId" Type="Int32" Nullable="false" />
+    <Property Name="available" Type="Byte" Nullable="false" />
+  </EntityType>
+  <EntityType Name="userInvoices">
+    <Key>
+      <PropertyRef Name="InvoiceId" />
+    </Key>
+    <Property Name="InvoiceId" Type="Int32" Nullable="false" />
+    <Property Name="Customer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Bill" Type="Int32" />
+    <Property Name="Payment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="InvoiceDate" Type="DateTime" Precision="0" />
+  </EntityType>
+  <EntityType Name="viewallproduct">
+    <Key>
+      <PropertyRef Name="ProID" />
+    </Key>
+    <Property Name="ProID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Unit" Type="Int32" />
+    <Property Name="Image" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="FK_tblProducts_tblCategories">
+    <End Type="CoffeeShopDbModel.Categories" Role="Categories" Multiplicity="0..1" />
+    <End Type="CoffeeShopDbModel.Products" Role="Products" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="CatId" />
+      </Principal>
+      <Dependent Role="Products">
+        <PropertyRef Name="CatId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Invoices__UserId__5535A963">
+    <End Type="CoffeeShopDbModel.Users" Role="Users" Multiplicity="0..1" />
+    <End Type="CoffeeShopDbModel.Invoices" Role="Invoices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Invoices">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__InvoiceI__5812160E">
+    <End Type="CoffeeShopDbModel.Invoices" Role="Invoices" Multiplicity="0..1" />
+    <End Type="CoffeeShopDbModel.Orders" Role="Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Invoices">
+        <PropertyRef Name="InvoiceId" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="InvoiceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Sits">
+    <Key>
+      <PropertyRef Name="sitId" />
+    </Key>
+    <Property Name="sitId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="available" Type="Byte" Nullable="false" />
+    <Property Name="tableId" Type="Int32" Nullable="false" />
+    <Property Name="userId" Type="Int32" />
+    <NavigationProperty Name="Tables" Relationship="CoffeeShopDbModel.FK__Sits__tableId__6B24EA82" FromRole="Sits" ToRole="Tables" />
+    <NavigationProperty Name="Users" Relationship="CoffeeShopDbModel.FK__Sits__userId__6C190EBB" FromRole="Sits" ToRole="Users" />
+  </EntityType>
+  <Association Name="FK__Sits__tableId__6B24EA82">
+    <End Type="CoffeeShopDbModel.Tables" Role="Tables" Multiplicity="1" />
+    <End Type="CoffeeShopDbModel.Sits" Role="Sits" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tables">
+        <PropertyRef Name="tableId" />
+      </Principal>
+      <Dependent Role="Sits">
+        <PropertyRef Name="tableId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Sits__userId__6C190EBB">
+    <End Type="CoffeeShopDbModel.Users" Role="Users" Multiplicity="0..1" />
+    <End Type="CoffeeShopDbModel.Sits" Role="Sits" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="userId" />
+      </Principal>
+      <Dependent Role="Sits">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

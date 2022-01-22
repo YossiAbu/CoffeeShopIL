@@ -1,0 +1,33 @@
+﻿@model ShoppingCartMVC.Models.getOrders
+
+<div style="margin-left:20px">
+    @using (Html.BeginForm())
+    {
+        <span>Invoice ID:</span>
+        <br />
+        @Html.DisplayFor(model => Model.InvoiceId)
+        <br />
+        <br />
+        <span>User ID:</span>
+        <br />
+        @Html.DisplayFor(model => Model.userId)
+        <br />
+        <br />
+        <span>Payment Type:</span>
+        <br />
+        @Html.EditorFor(model => model.Payment)
+        <br />
+        <br />
+        <span>Total:</span>
+        <br />
+        @Html.EditorFor(model => model.Bill)
+        <br />
+        <br />
+        <span>Invoice Date:</span>
+        <br />
+        @Html.DisplayFor(model => model.InvoiceDate)
+        <br />
+        <br />
+        <input type="submit" value="Confirm Order" class="btn btn-success" />
+    }
+</div>
